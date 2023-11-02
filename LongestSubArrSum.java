@@ -32,11 +32,11 @@ class MaxLenZeroSumSub {
 // Optimized Approach: Using Prefix Sum and HashMap (PrefixSum ->
 // FirstOccurrenceIndex): O(2N), SC: O(2N)
 // For every element in the Prefix Sum array:
-// if(element == 0) -> sum[0, i] = 0 -> len = i+1, also store in sumFirstOcc if
-// not present already.
+// if(element == 0) -> sum[0, i] = 0 -> len = i+1, no need to store in
+// sumFirstOcc as first occurrence of sum 0 is index 0 always.
 // else if(element exists in sumFirstOcc) -> len = element's index - first
-// occurence
-// else -> first occurence -> store in sumFirstOcc
+// occurrence
+// else -> first occurrence -> store in sumFirstOcc
 
 // Logic behind else if (and HashMap (PrefixSum -> FirstOccurrenceIndex)):
 // We know, prefixSum[r] = prefixSum[l - 1] + sum[l, r]
@@ -46,7 +46,7 @@ class MaxLenZeroSumSub {
 // sub-array from index l to r whose elements' sum is 0.
 // But, we want to find longest of such sub-array. We are traversing from left
 // to right, so it is better to maintain the l to be the left-most index i.e.
-// first occurence of that sum.
+// first occurrence of that sum.
 class GfG {
     int maxLen(int arr[], int n) {
         // Your code here
@@ -64,10 +64,6 @@ class GfG {
             if (prefixSum[i] == 0) {
                 len = i + 1;
                 maxLen = Math.max(maxLen, len);
-
-                if (!sumFirstOcc.containsKey(prefixSum[i])) {
-                    sumFirstOcc.put(prefixSum[i], i);
-                }
             } else if (sumFirstOcc.containsKey(prefixSum[i])) {
                 int LMinusOne = sumFirstOcc.get(prefixSum[i]);
                 len = i - LMinusOne;
